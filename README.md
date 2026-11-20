@@ -1,43 +1,49 @@
-# TraySense
+# TrayCoin — Taskbar & Widget Crypto Tracker
 
-[![Downloads](https://img.shields.io/github/downloads/DMTWEAKS/traysense/total?label=downloads)](https://github.com/DMTWEAKS/traysense/releases) [![Latest release](https://img.shields.io/github/v/release/DMTWEAKS/traysense)](https://github.com/DMTWEAKS/traysense/releases/latest)
+Lightweight, pure Win32 C cryptocurrency & meme coin price tracker for Windows 10/11 — featuring a native Taskbar overlay, an Always-on-Top glass Floating Widget, Real-Time WebSockets, and a parallel multi-exchange/DEX engine.
 
-Small system monitor that sits on the Windows taskbar next to the tray. Shows CPU, RAM, GPU, VRAM and temps.
+![TrayCoin Taskbar Overlay, Floating Widget & Settings](asset/Annotation%202026-11-20%20105634.png)
 
+![TrayCoin Watchlist Manager (50 Coins Live WebSocket)](asset/Annotation%202026-11-20%20105843.png)
+
+```text
+[↻]  BTC $63,855 -0.9%   ETH $1,804.3 -0.1%   PEPE $0.0₅382 +2.2%
 ```
-[cpu] 12% 54°   [ram] 61%   [gpu] 4% 44° VRAM 6%   [ssd] 38°
-```
 
-It's one C file using plain Win32, so the exe is around 100 KB and it uses a 1-3 MB of RAM at max. It only redraws when a number changes and it stops polling when the screen is off.
+## Key Features
 
-Works on Windows 10 and 11.
-
-PawnIO gets installed automatically when you turn on CPU temp (needed to read the CPU sensor). Since the driver needs admin, TraySense then copies itself to Program Files and starts from there as admin on login.
-
-Temps are white when normal, orange when elevated and red when extremely high. For CPU and GPU that's 80°C and 90°C, for the SSD 65°C and 75°C.
-
-## Usage
-
-Download the exe from [releases](https://github.com/DMTWEAKS/traysense/releases) and run it. Only get it from there, see SECURITY.md for how to check it's the real one. Right click for settings, left click opens Task Manager.
-
-## Uninstall
-
-Untick "Start with Windows" (this also removes the copy in Program Files), exit, delete the exe. If you don't need PawnIO anymore, remove it from Settings > Apps.
+- **Ultra-Light Native Win32 C:** Single ~350 KB `.exe`, zero external runtime, ~8 MB RAM, instant startup, no administrator rights required.
+- **16+ Exchange, DEX & Aggregator APIs:**
+  - **CEX (No API Key):** Binance (Spot + Futures + fallback mirror), OKX, Bybit, Gate.io, MEXC, KuCoin, Bitget, Coinbase, Kraken, HTX (Huobi).
+  - **DEX & Meme Coins (No API Key):** **DexScreener** (Token Contract, Pair Address, URL, or Name Search across Solana, Ethereum, Base, BSC, Arbitrum, TON, Sui...), **GeckoTerminal**, **Jupiter** (Solana).
+  - **Aggregators:** **CoinGecko** (Free / optional Demo key), **CoinMarketCap** (optional free Pro API key), plus **Auto (Smart)** routing.
+- **Real-Time WebSocket + Parallel Fetch Pool:**
+  - Native WinHTTP WebSocket streaming for **Binance Spot, Binance Futures, OKX, Bybit, Gate.io** with 250 ms UI throttling, 45 s zombie-socket watchdog, instant reconnect on Sleep/Resume or Wi-Fi/VPN changes (`NotifyIpInterfaceChange`), and automatic HTTP fallback.
+  - 6-worker parallel HTTP/2 fetch pool with provider batching (up to 64 coins), custom per-coin/global refresh intervals (`2`–`3600`s), and HTTP 429 exponential backoff.
+- **Always-on-Top Floating Widget & Global Hotkeys:**
+  - Windows 11 glass card (**Vertical Card** with 24-point mini sparklines, portfolio footer & automatic multi-column expansion when full height, or **Horizontal Pill** with Lock/Settings icons & automatic multi-row wrapping), adjustable **Opacity (30%–100%)**, magnetic edge snapping, **Lock & Click-Through** (`WS_EX_TRANSPARENT`).
+  - Global hotkeys: `Ctrl+Shift+C` (Show/Hide Widget), `Ctrl+Shift+L` (Toggle Click-Through lock), `Ctrl+Shift+R` (Refresh Now).
+- **Smooth Taskbar UX:**
+  - Clickable animated **`↻` Refresh icon**, **green/red 500 ms Tick Flash**, automatic **Pagination + Mouse-Wheel scroll** + optional **Auto-Rotate** when tracking many coins.
+- **Watchlist Manager & Alerts:**
+  - Resizable/maximizable 2-Tab native Windows Settings window with **instant offline Search/Filter**, **Select/Unselect All**, **multi-select right-click menu** (selective refresh, show/hide, move, copy contract, delete), **Price Alerts** (Windows notifications + sound), **Portfolio Holdings**, **Export/Import JSON**, and toggleable **Debug Logging (`traycoin.log`)** + crash handler.
 
 ## Building
 
-`./build.sh` with MinGW-w64, or `build.bat` on Windows (`build.bat msvc` for Visual Studio).
+```bat
+build.bat
+```
+*(Uses Visual Studio MSVC or MinGW-w64; pass `build.bat msvc` or `build.bat mingw` explicitly, or `./build.sh` on Linux/MSYS2.)*
 
-## License
+## Diagnostics & Live Tests
 
-Copyright (C) 2026 DMTWEAKS
+- `TrayCoin.exe --test-api` — Verify all 16+ CEX/DEX/Aggregator APIs live.
+- `TrayCoin.exe --test-poller` — Benchmark parallel HTTP polling on your `config.json`.
+- `TrayCoin.exe --test-ws` — Verify live WebSocket streams (Binance Spot/Futures, OKX, Bybit, Gate.io).
+- `TrayCoin.exe --test-refresh` — End-to-end multi-refresh regression test with WebSockets active.
 
-TraySense is licensed under the GNU AGPL-3.0, see LICENSE. You can use it, study it and modify it, but if you share a modified version (including running it as a service), you have to release your full source code under the same license and keep the copyright notice.
+## Author, Modifications & License
 
-Want to use TraySense code in a closed source or commercial app? That needs my written permission and a separate license, contact me first.
-
-The TraySense name and logo aren't covered by the license. If you fork it, give your fork a different name.
-
-Contributions are accepted under the same license. By sending a contribution you also allow DMTWEAKS to license it under other terms, so the project can keep offering separate licenses.
-
-The PawnIO modules in `pawnio/` are LGPL-2.1, see THIRD_PARTY.md.
+- **Author of TrayCoin modifications & features:** [`@hoangquocvietbro`](https://github.com/hoangquocvietbro) (2026)
+- **Original upstream project:** Based on **TraySense** (Copyright © 2026 DMTWEAKS), whose Win32 taskbar overlay and UI Automation placement architecture served as the starting foundation.
+- **License:** Licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)** — see [LICENSE](LICENSE) and [NOTICE](NOTICE) for full copyright notices and the complete summary of modifications in accordance with AGPL-3.0 Section 5.

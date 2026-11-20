@@ -1,18 +1,20 @@
 # Security
 
-If you find a security issue please don't open a public issue. Report it privately through the Security tab ("Report a vulnerability") and I'll get back to you.
+If you find a security issue, please report it privately through the GitHub Security tab ("Report a vulnerability") on https://github.com/hoangquocvietbro/traycoin.
 
 ## Downloads
 
-Only download TraySense from the releases page of this repo: https://github.com/DMTWEAKS/traysense/releases
+Only download `TrayCoin.exe` from the official releases page of this repository:
+https://github.com/hoangquocvietbro/traycoin/releases
 
-Every release is built by GitHub Actions straight from this repo. You can check that the exe you have is the real one:
+Every release is built cleanly by GitHub Actions directly from source. You can verify your binary:
 
-- compare its SHA-256 with `TraySense.exe.sha256` on the release page, or
-- with the GitHub CLI: `gh attestation verify TraySense.exe --repo DMTWEAKS/traysense`
+- Compare its SHA-256 checksum with `TrayCoin.exe.sha256` on the release page, or
+- Verify build provenance with GitHub CLI:
+  `gh attestation verify TrayCoin.exe --repo hoangquocvietbro/traycoin`
 
-If someone sends you TraySense from anywhere else, don't run it.
+## Privileges & Network
 
-## What runs as admin
-
-Only when you turn on CPU temp. TraySense then installs the PawnIO driver (official installer, SHA-256 pinned), copies itself to `Program Files\TraySense` and starts from there at login. It never updates itself or downloads anything else.
+- **No administrator privileges required:** TrayCoin runs entirely in standard user mode (autostart uses `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`).
+- **No kernel drivers or external runtimes:** All hardware-driver code (PawnIO) from the upstream TraySense project has been removed.
+- **Read-only market data:** TrayCoin only makes HTTPS / WSS connections to public cryptocurrency exchange, DEX, and aggregator APIs to fetch prices; it never handles wallets, private keys, or trading API keys.

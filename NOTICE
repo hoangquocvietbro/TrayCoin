@@ -1,0 +1,31 @@
+TrayCoin - Taskbar & Widget Crypto Tracker
+==========================================
+
+Copyright (C) 2026 hoangquocvietbro (@hoangquocvietbro) — Modified 2026-11
+Based on TraySense, Copyright (C) 2026 DMTWEAKS.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version (see the LICENSE file for the full text).
+
+Notice of Modifications (GNU AGPL-3.0 Section 5(a))
+---------------------------------------------------
+Starting in November 2026, @hoangquocvietbro modified TraySense (originally a
+Windows taskbar CPU/GPU/RAM hardware monitor by DMTWEAKS) into "TrayCoin -
+Taskbar & Widget Crypto Tracker", retaining the Win32 layered taskbar overlay
+and UI Automation placement foundation while adding/rewriting:
+
+- Multi-exchange, DEX & aggregator price engine (16+ APIs: Binance Spot/Futures,
+  OKX, Bybit, Gate.io, MEXC, KuCoin, Bitget, Coinbase, Kraken, HTX, DexScreener,
+  GeckoTerminal, Jupiter, CoinGecko, CoinMarketCap, and Auto smart routing).
+- Native WinHTTP HTTP/2 parallel polling pool, provider batching (up to 64 coins),
+  and real-time WinHTTP WebSocket streaming with 45s zombie-socket watchdog and
+  automatic Sleep/Resume & Wi-Fi/VPN change recovery (NotifyIpInterfaceChange).
+- Always-on-Top glass Floating Widget (multi-column Vertical Card with 24-pt
+  mini sparklines & portfolio footer; multi-row Horizontal Pill with Lock &
+  Settings controls), global hotkeys, opacity, click-through, and edge snapping.
+- Native Win32 2-Tab Watchlist & Settings Manager with offline search/filter,
+  multi-select context actions, DexScreener token/contract search, price alerts,
+  portfolio holdings, JSON import/export, and toggleable debug/crash logging.
+- Zero-dependency JSON DOM parser/serializer and removal of hardware/PawnIO code.
